@@ -1,0 +1,6 @@
+---
+- name: Get information of the system
+  ansible.builtin.package_flacts:
+   manager: auto
+
+

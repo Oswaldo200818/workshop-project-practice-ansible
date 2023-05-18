@@ -1,0 +1,8 @@
+---
+- name: Practice the Ansible with Linux
+  hosts: web
+  become: true
+  gather_facts: true
+
+  roles:
+    - bdd_advanced
