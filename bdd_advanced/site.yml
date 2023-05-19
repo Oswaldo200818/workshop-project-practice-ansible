@@ -5,4 +5,4 @@
   gather_facts: true
 
   roles:
-    - bdd_advanced
+    - bdd_simple
