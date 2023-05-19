@@ -29,6 +29,24 @@
    state: started
    enabled: true
 
+- name: Create database bd_example
+  become_user: postgres
+  become: true
+  postgresql_db:
+   name: bd_example
+
+- name: Create user in the bd_example
+  become_user: postgres
+  become: true
+  postgresql_user:
+   db: bd_example
+   name: admin
+   password: admin*
+   priv: ALL
+   state: present
+
+
+
 
 
 
