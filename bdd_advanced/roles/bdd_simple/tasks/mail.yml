@@ -54,6 +54,20 @@
    priv: ALL
    state: present
 
+- name: Allow md5 connection for database user
+  become_user: postgres
+  become: true
+  lineinfile:
+    dest: /etc/postgresql/9.6/main/pg_hba.conf
+    state: present
+    regexp: '^#*.*{{ bd_example }}.*'
+    line: 'host    {{ bd_example }}    {{ admin }}    0.0.0.0/0    md5'
+    backrefs: yes
+    insertafter: '^# IPv4 local connections:'
+    validate: '/usr/sbin/postgresql --check --global-config-only'
+    backup: yes
+
+
 
 
 
