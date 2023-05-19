@@ -70,7 +70,9 @@
   become: true
   command: pg_dump {{database_name}} > /tmp/backup_db
 
-
+- name: Reboot the server 
+  ansible.builtin.reboot:
+    reboot_timeout: 3600
 
 
 
