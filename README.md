@@ -1,4 +1,5 @@
 Proyecto de Tareas con Ansible
+
 author: oquinteros
 
 Este proyecto utiliza Ansible para automatizar tareas relacionadas con la instalación y configuración de PostgreSQL en servidores.
@@ -20,12 +21,13 @@ y su llamada es por el site.yml.
 vars/: Contiene los archivos YAML con las variables utilizadas.
 ---
 database_name: bd_example
+
 database_user: admin
 
 
 Ejecución
 
-ansible-playbook site.yml -i inventory.ini
+ansible-playbook site.yml -i nombreInventario
 
 
 Licencia
