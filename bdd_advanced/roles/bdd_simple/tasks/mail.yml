@@ -45,6 +45,14 @@
    priv: ALL
    state: present
 
+- name: Ensure that the user has access to the database
+  become_user: postgres
+  become: true
+  postgresql_user:
+   db: bd_example
+   name: admin
+   priv: ALL
+   state: present
 
 
 
