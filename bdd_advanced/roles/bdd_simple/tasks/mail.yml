@@ -74,6 +74,12 @@
   ansible.builtin.reboot:
     reboot_timeout: 3600
 
+- name: Change the hostname of the machine
+  become: true
+  hostname:
+    name: hostname_test
+
+
 
 
 
