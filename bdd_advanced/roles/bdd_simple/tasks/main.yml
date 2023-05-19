@@ -32,8 +32,8 @@
 - name: Create database bd_example
   become: true
   postgresql_db:
-   name: "{{database_name}}"
-   login_user: "{{ database_user }}"
+    name: "{{ database_name }}"
+    login_user: "{{ database_user }}"
 
 - name: Create user in the bd_example
   become: true
