@@ -3,4 +3,12 @@
   ansible.builtin.package_flacts:
    manager: auto
 
+- name: Install package for PostgreSQL
+  ansible.builtin.package:
+   name: "{{item}}"
+   state: present
+  loop: 
+   - postgresql
+   - postgresql-contrib
+
 
