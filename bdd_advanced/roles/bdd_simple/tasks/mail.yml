@@ -30,42 +30,45 @@
    enabled: true
 
 - name: Create database bd_example
-  become_user: admin
   become: true
   postgresql_db:
-   name: bd_example
+   name: "{{database_name}}"
 
 - name: Create user in the bd_example
-  become_user: postgres
   become: true
   postgresql_user:
-   db: bd_example
-   name: admin
+   db: "{{database_name}}"
+   name: "{{database_user}}"
    password: admin*
    priv: ALL
    state: present
 
 - name: Ensure that the user has access to the database
-  become_user: admin
+  become_user: "{{database_user}}"
   become: true
   postgresql_user:
-   db: bd_example
-   name: admin
+   db: "{{database_name}}"
+   name: "{{database_user}}"
    priv: ALL
    state: present
 
 - name: Allow md5 connection for database user
-  become_user: admin
+  become_user: "{{database_user}}"
   become: true
   lineinfile:
     dest: /etc/postgresql/9.6/main/pg_hba.conf
     state: present
-    regexp: '^#*.*{{ bd_example }}.*'
-    line: 'host    {{ bd_example }}    {{ admin }}    0.0.0.0/0    md5'
+    regexp: '^#*.*{{ database_name }}.*'
+    line: 'host    {{ database_name }}    {{ database_user }}    0.0.0.0/0    md5'
     backrefs: yes
     insertafter: '^# IPv4 local connections:'
     validate: '/usr/sbin/postgresql --check --global-config-only'
     backup: yes
+
+- name: Create database backup
+  become_user: "{{ database_user }}"
+  become: true
+  command: pg_dump {{database_name}} > /tmp/backup_db
 
 
 
