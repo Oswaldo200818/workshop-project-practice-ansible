@@ -56,14 +56,14 @@
   become_user: "{{database_user}}"
   become: true
   lineinfile:
-    dest: /etc/postgresql/9.6/main/pg_hba.conf
-    state: present
-    regexp: '^#*.*{{ database_name }}.*'
-    line: 'host    {{ database_name }}    {{ database_user }}    0.0.0.0/0    md5'
-    backrefs: yes
-    insertafter: '^# IPv4 local connections:'
-    validate: '/usr/sbin/postgresql --check --global-config-only'
-    backup: yes
+   dest: /etc/postgresql/9.6/main/pg_hba.conf
+   state: present
+   regexp: '^#*.*{{ database_name }}.*'
+   line: 'host    {{ database_name }}    {{ database_user }}    0.0.0.0/0    md5'
+   backrefs: yes
+   insertafter: '^# IPv4 local connections:'
+   validate: '/usr/sbin/postgresql --check --global-config-only'
+   backup: yes
 
 - name: Create database backup
   become_user: "{{ database_user }}"
@@ -72,17 +72,22 @@
 
 - name: Reboot the server 
   ansible.builtin.reboot:
-    reboot_timeout: 3600
+   reboot_timeout: 3600
 
 - name: Change the hostname of the machine
   become: true
   ansible.builtin.hostname:
-    name: hostname_test
+   name: hostname_test
 
 - name: Print IP and hostname
   ansible.builtin.debug:
-    msg: "La dirección IP del servidor es {{ ansible_default_ipv4.address }} y el hostname es {{ ansible_hostname }}"
+   msg: "La dirección IP del servidor es {{ ansible_default_ipv4.address }} y el hostname es {{ ansible_hostname }}"
 
+- name: Add entry in /etc/hosts
+  become: true
+  ansible.builtin.lineinfile:
+   path: /etc/hosts
+   line: "{{ ansible_default_ipv4.address }} {{ ansible_hostname }}"
 
 
 
