@@ -76,8 +76,12 @@
 
 - name: Change the hostname of the machine
   become: true
-  hostname:
+  ansible.builtin.hostname:
     name: hostname_test
+
+- name: Print IP and hostname
+  ansible.builtin.debug:
+    msg: "La dirección IP del servidor es {{ ansible_default_ipv4.address }} y el hostname es {{ ansible_hostname }}"
 
 
 
